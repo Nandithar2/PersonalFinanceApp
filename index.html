@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal finance application</title>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+  />  
+</head>
+  <body>
+    <main>
+      <form id = "transaction-form">
+        <input type="number" name="amount" placeholder="amount" required>
+        <input type="date" name="date" placeholder="date" required>
+        <select
+              name="category"
+              aria-label="Select Category"
+              required
+            >
+              <option selected disabled value="">
+                Select your category
+              </option>
+              <option>Bills and Utilities</option>
+              <option>Charity</option>
+              <option>Commute</option>
+              <option>Education</option>
+              <option>Entertainment</option>
+              <option>Family and Pets</option>
+              <option>Fees & Charges</option>
+              <option>Fitness</option>
+              <option>Food and Drinks</option>
+              <option>Fuel</option>
+              <option>Groceries</option>
+              <option>Household</option>
+              <option>Medical</option>
+              <option>Personal Care</option>
+              <option>Rent</option>
+              <option>Shopping</option>
+              <option>Travel</option>
+            </select>
+            <button type="submit">add transaction</button>
+      </form>
+
+      <h1>Transactions</h1>
+      <hr>
+      <table class="striped">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Cumulative</th>
+          </tr>
+        </thead>
+        <tbody id="transactions">
+        </tbody>
+      </table>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
