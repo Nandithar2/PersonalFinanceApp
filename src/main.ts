@@ -43,7 +43,6 @@
 //}
 //})();
 
-import "./style.css";
 
 if("serviceWorker" in navigator){
   try{
@@ -83,7 +82,7 @@ type Transaction = {
                   "transaction-form",
               ) as HTMLFormElement,
               handler: {
-                  set(obj: any, property: string, value: any) {
+                  set(_: any, property: string, value: any) {
                       if (property === "transactions") {
                           target.transactions = value;
                           view.render(target.transactions);
@@ -154,3 +153,5 @@ type Transaction = {
 
   document.onreadystatechange = initializeApp;
 })();
+
+export {}
