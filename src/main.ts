@@ -70,7 +70,41 @@ type Transaction = {
 (() => {
   const target = {
       transactions: [] as Transaction[],
-  };
+      get credits() {
+        let totalCredits = 0;
+        for (const transaction of this.transactions) {
+            if (transaction.amount > 0) {
+                totalCredits += transaction.amount;
+            }
+        }
+        return totalCredits;
+    },
+    get debits() {
+        let totalDebits = 0;
+        for (const transaction of this.transactions) {
+            if (transaction.amount < 0) {
+                totalDebits += transaction.amount;
+            }
+        }
+        return totalDebits;
+    },
+    get highestSpendsCategory() {
+        const categories = {} as { [key: string]: number };
+        let maximumSpends = 0;
+        let maxCategory = "";
+        for (const transaction of this.transactions) {
+            if (!(transaction.category in categories)) {
+                categories[transaction.category] = 0;
+            }
+            categories[transaction.category] += transaction.amount;
+            if (categories[transaction.category] >= maximumSpends) {
+                maximumSpends = categories[transaction.category];
+                maxCategory = transaction.category;
+            }
+        }
+        return maxCategory;
+    },
+};
 
   const initializeApp = () => {
       if (document.readyState === "complete") {
@@ -81,6 +115,13 @@ type Transaction = {
               transactionsForm: document.getElementById(
                   "transaction-form",
               ) as HTMLFormElement,
+              totalCredits: document.getElementById(
+                "total-credits",
+            ) as HTMLSpanElement,
+            totalDebits: document.getElementById("total-debits") as HTMLFormElement,
+            highestCategory: document.getElementById(
+                "highest-category",
+            ) as HTMLFormElement,
               handler: {
                   set(_: any, property: string, value: any) {
                       if (property === "transactions") {
@@ -104,6 +145,10 @@ type Transaction = {
                       `;
                       cumulative += transaction.amount;
                   }
+                  this.totalCredits.innerHTML = target.credits.toString();
+					this.totalDebits.innerHTML = target.debits.toString();
+					this.highestCategory.innerHTML = target.highestSpendsCategory;
+                    
               },
               init() {
                   this.transactionsForm.onsubmit = (e) => {
